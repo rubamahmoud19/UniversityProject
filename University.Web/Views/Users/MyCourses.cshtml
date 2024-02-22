@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Courses</th>
+        <th></th>
+    </tr>
+    @foreach (var course in ViewBag.courses)
+    {
+        <tr>
+            <td>#</td>
+            <td>@course.CourseName</td>
+            <th>
+                @Html.ActionLink("Disenroll", "Disenroll", "Enrollements", new { courseId = course.Id }, new { onclick = "return confirm('Are you sure you want to disenroll course?');" })
+            </th>
+        </tr>
+    }
+</table>

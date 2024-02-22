@@ -1,0 +1,11 @@
+@model University.Entity.Entities.Course
+<div>
+  Are you sure you want to delete course
+  @Html.DisplayFor(model => model.CourseName)
+</div>
+<div>
+  <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a asp-action="Index">Back to List</a>
+  </form>
+</div>

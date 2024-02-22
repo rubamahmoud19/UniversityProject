@@ -1,0 +1,32 @@
+
+<div>
+ <h5>
+  @ViewBag.course.CourseName
+</h5>
+@*     <form asp-controller="Enrollements" asp-action="Enroll" method="post" asp-route-courseId="@ViewBag.course.Id">
+            <button type="submit" class="btn btn-primary float-end">Enroll</button>
+    </form> *@
+</div>
+
+@if (ViewBag.course.Users != null && ViewBag.course.Users.Count > 0)
+{
+    <table class = "table">
+  <tr>
+    <th>#</th>
+    <th>Username</th>
+    <th></th>
+  </tr>
+        @foreach (var student in ViewBag.course.Users)
+        {   <tr>
+                <td>#</td>
+                <td>@student.Username</td>
+                <th></th>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No students enrolled in this course.</p>
+}
+

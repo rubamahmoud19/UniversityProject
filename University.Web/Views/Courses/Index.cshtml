@@ -1,0 +1,72 @@
+@using University.Entity.Entities
+@model X.PagedList.IPagedList<Course>
+@{
+    // Check if the "LoggedIn" cookie exists
+    bool Isteacher = Context.Request.Cookies["userType"] == "Teacher";
+}
+@using (Html.BeginForm(null, null, FormMethod.Get, new { PageNumber = 1 }))
+{
+  <div class = "padding-md">
+  Find by name: @Html.TextBox("SearchString")
+  <input type="submit" value="Search" />
+  <span class="float-end">
+    @Html.ActionLink("Add New Course", "New", "Courses", null, new { @class = "btn btn-primary" })
+  </span>
+</div>
+
+}
+<table class = "table">
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th></th>
+  </tr>
+    @foreach (var course in Model)
+    {
+    <tr>
+      <td>@course.Id</td>
+      <td>@course.CourseName</td>
+      <td>
+        @Html.ActionLink("Show", "Show", new { id = course.Id }) 
+        @if (Isteacher)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = course.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = course.Id })
+                }else{
+                    if (Enumerable.Contains(ViewBag.courseIds, course.Id))
+                    {
+                        @Html.ActionLink("Disenroll", "Disenroll", "Enrollements", new { courseId = course.Id }, new { onclick = "return confirm('Are you sure you want to disenroll course?');" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Enroll", "Enroll", "Enrollements", new { courseId = course.Id }, new { onclick = "return confirm('Are you sure you want to enroll course?');" })
+                    }
+                    
+        }
+
+        
+      </td>
+    </tr>
+  }
+</table>
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @if (Model.HasPreviousPage)
+    {
+        <a href="@Url.Action("Index", new { pageNumber = Model.PageNumber - 1, searchString = ViewBag.CurrentFilter })">Previous</a>
+    }
+    else
+    {
+        <span>Previous</span>
+    }
+
+    @if (Model.HasNextPage)
+    {
+        <a href="@Url.Action("Index", new { pageNumber = Model.PageNumber + 1, searchString = ViewBag.CurrentFilter })">Next</a>
+    }
+    else
+    {
+        <span>Next</span>
+    }
+</div>

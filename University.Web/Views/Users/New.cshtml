@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Sign up";
+}
+@model University.Entity.Dto.UserDto;
+
+
+<h2>Sign up</h2>
+@if (ViewData.ModelState.IsValid == false)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@modelError.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<form method="post" action="Create">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Username, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UniversityId,"University", new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.UniversityId, new SelectList(ViewBag.Universities, "Id", "Name"), "Select University", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserType, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.UserType, ViewBag.UserTypes as SelectList, "Select User Type", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary padding-md">Login</button>
+</form>

@@ -1,0 +1,18 @@
+@model University.Entity.Dto.CourseDto;
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+<form method = "post" action = "Create" >
+  <div class = "padding-md">
+    <label asp-for="CourseName" >Name</label>
+    <span asp-validation-for="CourseName" class="text-danger"></span>
+  </div>
+  <div class = "padding-md">
+    <input type="text" asp-for="CourseName">
+  </div>
+
+  <button type = "submit" class = "padding-md btn btn-primary"> Save</button>
+</form>

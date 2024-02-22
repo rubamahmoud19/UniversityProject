@@ -1,0 +1,15 @@
+<table> 
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Location</th>
+  </tr>
+    @foreach (var university in ViewBag.universities)
+  {
+    <tr>
+      <td>@university.Id</td>
+      <td>@university.Name</td>
+      <td>@university.Location</td>
+    </tr>
+  }
+</table>
